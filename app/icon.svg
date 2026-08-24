@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Situa">
+  <rect width="100" height="100" rx="22" fill="#F4511E"/>
+  <g transform="translate(22 21) scale(0.583)">
+    <path fill="none" stroke="#0A0A0B" stroke-width="20" d="M10,0 V52 A38,38 0 0 0 86,52 V0"/>
+  </g>
+</svg>

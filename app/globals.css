@@ -1,0 +1,485 @@
+@import "tailwindcss";
+
+/* ============================================================
+   SITUA — dark room, lit work
+   The logo's geometry is the page's grammar:
+   · the CUT   — a bar that overshoots its container
+   · the APERTURE — the U bowl, used as marker and wayfinding
+   · one hairline weight, butt ends, true radii, no soft edges
+   ============================================================ */
+
+@theme {
+  --color-void: #0A0A0B;
+  --color-surface: #131316;
+  --color-line: #26262B;
+  --color-text: #F5F3EF;
+  --color-muted: #8A8A93;
+  --color-signal: #F4511E;
+
+  --font-sans: var(--font-body), Inter, Arial, Helvetica, sans-serif;
+  --font-display: var(--font-display-face), "Bricolage Grotesque", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem);
+  --text-xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem);
+  --text-2xl: clamp(2.25rem, 1.6rem + 2.9vw, 4.25rem);
+  --text-3xl: clamp(2.75rem, 1.3rem + 6.4vw, 7.5rem);
+
+  --spacing-gutter: clamp(20px, 5vw, 80px);
+  --spacing-section: clamp(96px, 13vw, 200px);
+  --container-max: 1440px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The page is useful immediately; motion starts with, never before, content. */
+:root { --enter-delay: 0ms; }
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    background: var(--color-void);
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--color-text);
+    background: var(--color-void);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p { margin: 0; }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 4px;
+  }
+
+  ::selection { background: var(--color-signal); color: var(--color-void); }
+
+  .skip-link {
+    position: absolute; top: -100%; left: var(--spacing-gutter); z-index: 200;
+    padding: 0.75rem 1.5rem; background: var(--color-signal); color: var(--color-void);
+    font-weight: 700;
+  }
+  .skip-link:focus { top: 0; }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+  }
+
+  .section { padding-block: var(--spacing-section); }
+
+  /* ---- THE CUT — hairline that overshoots into the gutter ---- */
+  .cut-rule {
+    position: relative;
+    height: 1px;
+    background: var(--color-line);
+    border: 0;
+    margin: 0;
+  }
+  .cut-rule::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--spacing-gutter));
+    top: -1px;
+    width: calc(var(--spacing-gutter) + 56px);
+    height: 3px;
+    background: var(--color-signal);
+  }
+
+  /* ---- THE APERTURE — the U bowl, as section marker ---- */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* ---- Links: underline bar that overshoots on hover ---- */
+  .link-cut {
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+    padding-bottom: 6px;
+  }
+  .link-cut::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 2px;
+    background: var(--color-signal);
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 200ms var(--ease-out-expo), width 200ms var(--ease-out-expo);
+  }
+  .link-cut:hover::after,
+  .link-cut:focus-visible::after { width: calc(100% + 0.75em); }
+
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 52px; padding-inline: 1.75rem;
+    font-weight: 700; font-size: var(--text-sm);
+    letter-spacing: 0.01em;
+    transition: transform 180ms var(--ease-out-expo), background-color 180ms ease;
+  }
+  .btn-primary { background: var(--color-signal); color: var(--color-void); }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-ghost { color: var(--color-text); border: 1px solid var(--color-line); }
+  .btn-ghost:hover { border-color: var(--color-text); transform: translateY(-2px); }
+  .btn:active { transform: scale(0.98); transition-duration: 100ms; }
+  .btn:disabled { transform: none; }
+
+  /* ---- The work plane ---- */
+  .plane {
+    position: relative;
+    perspective: 1600px;
+  }
+  .plane-inner {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.09);
+    background: var(--color-surface);
+    box-shadow:
+      0 2px 6px rgb(0 0 0 / 0.5),
+      0 30px 70px -20px rgb(0 0 0 / 0.85);
+    transform: translateY(var(--plane-lift, 0px)) rotateY(calc(var(--base-ry, 0deg) + var(--tilt-y, 0deg))) rotateX(calc(1.5deg + var(--tilt-x, 0deg)));
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 420ms var(--ease-out-expo), box-shadow 420ms var(--ease-out-expo);
+  }
+  .plane-inner img {
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: top center;
+  }
+  /* specular sweep */
+  .plane-inner::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.07) 46%, transparent 60%);
+    transform: translateX(-120%);
+    transition: transform 900ms var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .plane:hover .plane-inner::after { transform: translateX(120%); }
+  .work-tilt:hover .plane-inner { box-shadow: 0 8px 18px rgb(0 0 0 / 0.52), 0 46px 90px -28px rgb(0 0 0 / 0.95); }
+
+  /* orange cut bar tucked behind the plane */
+  .plane-cut::before {
+    content: "";
+    position: absolute;
+    left: -18px; bottom: 34px;
+    width: 96px; height: 8px;
+    background: var(--color-signal);
+    z-index: 2;
+  }
+
+  .stamp {
+    position: absolute; z-index: 3;
+    left: 0; top: 22px;
+    background: var(--color-signal); color: var(--color-void);
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 7px 14px 7px 22px;
+  }
+
+  .form-handoff {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+  .form-handoff-spinner {
+    width: 0.8rem;
+    height: 0.8rem;
+    flex: none;
+    border: 1px solid var(--color-line);
+    border-top-color: var(--color-signal);
+    border-radius: 50%;
+    animation: handoff-spin 650ms linear infinite;
+  }
+
+
+  /* ---- Film grain. The one texture on the page. ---- */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---- Work runs out to the viewport edge — exactly to it, not past it.
+         The container is centred and capped, so the distance from the content
+         edge to the screen edge is the gutter plus half the leftover width. ---- */
+  .bleed-right,
+  .bleed-left {
+    --bleed: calc(
+      (100vw - min(100vw, var(--container-max))) / 2 + var(--spacing-gutter)
+    );
+  }
+  .bleed-right { margin-right: calc(-1 * var(--bleed)); }
+  .bleed-left  { margin-left:  calc(-1 * var(--bleed)); }
+
+  /* ---- Ghost numeral sitting behind each project ---- */
+  .ghost-num {
+    position: absolute;
+    z-index: 0;
+    top: -0.34em;
+    font-family: var(--font-sans);
+    font-size: clamp(9rem, 20vw, 19rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-line);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ---- The ledger: the work as an index before it is a gallery ---- */
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr auto;
+    gap: 1.25rem;
+    align-items: baseline;
+    padding-block: 1.15rem;
+    border-top: 1px solid var(--color-line);
+    transition: color 200ms var(--ease-out-expo);
+  }
+  .ledger-row:last-child { border-bottom: 1px solid var(--color-line); }
+  .ledger-row:hover, .ledger-row:focus-visible { color: var(--color-signal); }
+  .ledger-name {
+    font-size: clamp(1.25rem, 2.4vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .ledger-row .dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--color-line);
+    translate: 0 -0.35em;
+  }
+
+  /* ---- Territory: manifesto rows, not columns ---- */
+  .manifesto-row {
+    display: grid;
+    gap: 1.5rem 3rem;
+    padding-block: clamp(2.25rem, 4vw, 3.5rem);
+    border-top: 1px solid var(--color-line);
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .manifesto-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  .manifesto-title {
+    font-size: clamp(2rem, 5.2vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+  }
+
+  .body-copy { color: var(--color-muted); font-size: var(--text-lg); line-height: 1.55; max-width: 54ch; }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .measure { max-width: 20ch; }
+  .measure-md { max-width: 32ch; }
+}
+
+/* ============================================================
+   MOTION
+   One easing. Entrances fire once. The rail is the only loop.
+   Scroll-driven states are opt-in via @supports so that a
+   browser without support simply shows the finished state.
+   ============================================================ */
+
+/* hero — masked lines rising, on load */
+.line-mask { display: block; overflow: hidden; }
+.line-mask > span { display: block; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .line-mask > span {
+    animation: rise-in 900ms var(--ease-out-expo) both;
+    animation-delay: calc(var(--enter-delay) + var(--i, 0) * 80ms);
+  }
+  .fade-up {
+    animation: fade-up 900ms var(--ease-out-expo) both;
+    animation-delay: calc(var(--enter-delay) + 220ms + var(--i, 0) * 80ms);
+  }
+  .cut-in {
+    animation: cut-in 700ms var(--ease-out-expo) both;
+    animation-delay: calc(var(--enter-delay) + 620ms);
+  }
+}
+
+@keyframes rise-in { from { transform: translateY(105%); } to { transform: translateY(0); } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes cut-in  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* the drifting work rail — the page's only loop */
+.rail-track {
+  display: flex;
+  width: max-content;
+  gap: 28px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @media (min-width: 768px) {
+    .rail-track { animation: drift 70s linear infinite; }
+  }
+  .rail:hover .rail-track,
+  .rail:focus-within .rail-track { animation-play-state: paused; }
+}
+@keyframes drift { to { transform: translateX(calc(-50% - 14px)); } }
+
+/* scroll-driven reveals */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: fade-up 1ms linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 55%;
+    }
+    .reveal-stagger > * {
+      animation: fade-up 1ms linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 60%;
+    }
+    .rule-draw {
+      animation: draw 1ms linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 70%;
+      transform-origin: left;
+    }
+  }
+}
+
+/* ---- SVG construction: the mark drawing its own geometry ----
+   Driven by DrawOnView, not by a scroll timeline: `view()` requires a CSS
+   layout box that SVG paths do not have, and a footer at the page bottom can
+   never scroll far enough to complete a scrubbed animation.
+   Without JS no class lands here and the mark simply renders finished. ---- */
+.is-armed .draw-path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.is-armed .draw-fill { opacity: 0; }
+.is-armed .draw-cut  { transform: scaleX(0); transform-origin: left center; }
+
+.is-drawn .draw-path {
+  animation: draw-stroke 620ms var(--ease-out-expo) forwards;
+}
+.is-drawn .draw-path:nth-of-type(2) { animation-delay: 90ms; }
+.is-drawn .draw-path:nth-of-type(3) { animation-delay: 180ms; }
+.is-drawn .draw-path:nth-of-type(4) { animation-delay: 240ms; }
+.is-drawn .draw-path:nth-of-type(5) { animation-delay: 330ms; }
+
+.is-drawn .draw-fill {
+  animation: fade-in 420ms var(--ease-out-expo) 620ms forwards;
+}
+.is-drawn .draw-cut {
+  animation: cut-in 480ms var(--ease-out-expo) 860ms forwards;
+}
+
+/* The header mark uses the footer's construction, timed to begin as the
+   preloader clears. Returning visitors draw it immediately. */
+.nav-logo.is-drawn .draw-path { animation-delay: var(--enter-delay); }
+.nav-logo.is-drawn .draw-path:nth-of-type(2) { animation-delay: calc(var(--enter-delay) + 90ms); }
+.nav-logo.is-drawn .draw-path:nth-of-type(3) { animation-delay: calc(var(--enter-delay) + 180ms); }
+.nav-logo.is-drawn .draw-path:nth-of-type(4) { animation-delay: calc(var(--enter-delay) + 240ms); }
+.nav-logo.is-drawn .draw-path:nth-of-type(5) { animation-delay: calc(var(--enter-delay) + 330ms); }
+.nav-logo.is-drawn .draw-fill { animation-delay: calc(var(--enter-delay) + 620ms); }
+.nav-logo.is-drawn .draw-cut { animation-delay: calc(var(--enter-delay) + 860ms); }
+
+@keyframes draw-stroke { to { stroke-dashoffset: 0; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes handoff-spin { to { transform: rotate(1turn); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .plane-inner { transform: none !important; }
+}
+
+@media (max-width: 767px) {
+  .work-rail-scroll { scrollbar-width: none; }
+  .work-rail-scroll::-webkit-scrollbar { display: none; }
+  .rail-track { padding-right: var(--spacing-gutter); }
+  .plane-inner { transform: none; }
+}
+
+/* ============================================================
+   PRELOADER — "the vessel"
+   Orange rises inside the aperture, then the panel lifts.
+   CSS-only, so it clears itself with or without JS. Skipped
+   on repeat visits and for reduced-motion.
+   ============================================================ */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--color-void);
+  animation: pl-lift 620ms var(--ease-out-expo) 760ms forwards;
+}
+.pl-wrap { position: relative; width: min(52vw, 260px); }
+.pl-mark { display: block; width: 100%; height: auto; }
+
+/* The orange copy of the letterform, revealed by a rising clip.
+   Linear: the fill has to read as filling, not as the letter appearing. */
+.pl-fill-layer {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(100% 0 0 0);
+  animation: pl-fill 680ms linear 40ms forwards;
+}
+
+@keyframes pl-fill { to { clip-path: inset(0 0 0 0); } }
+@keyframes pl-lift { to { transform: translateY(-100%); visibility: hidden; } }
+
+@media (prefers-reduced-motion: reduce) { .preloader { display: none; } }
