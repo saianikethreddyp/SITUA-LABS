@@ -21,9 +21,14 @@ export default function SiteFooter() {
             href="https://www.instagram.com/situalabs/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-text transition-colors"
+            aria-label="Situa on Instagram"
+            className="inline-flex h-10 w-10 items-center justify-center text-muted transition-colors hover:text-text focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
           >
-            Instagram <span className="sr-only">(opens in a new tab)</span>
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none" />
+            </svg>
           </a>
         </nav>
       </div>
