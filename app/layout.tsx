@@ -5,7 +5,7 @@ import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
 import Preloader from "@/components/preloader";
 
-const siteUrl = new URL("https://situa-web.vercel.app");
+const siteUrl = new URL("https://situalabs.vercel.app");
 
 /* Display carries the attitude; body carries the reading. */
 const display = Bricolage_Grotesque({

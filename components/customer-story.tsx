@@ -17,6 +17,11 @@ export default function CustomerStory() {
         promise from what happens after they say yes. They judge all of it by
         whichever part failed them last.
       </p>
+
+      <p className="body-copy mt-5 reveal">
+        Customer experience design can mean reworking a website, keeping
+        follow-up moving, or giving the team better service tools.
+      </p>
     </section>
   );
 }
