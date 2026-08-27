@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   title: "Situa — We build how customers experience your business",
   description:
     "Situa finds the point where a business loses customers — in discovery, in follow-up, or in delivery — and rebuilds it.",
+  verification: {
+    google: "HFNQxApqKap9mBydpQcdj59i7Q1NeqA37ZlTCURLtr8",
+  },
 };
 
 export default function RootLayout({
