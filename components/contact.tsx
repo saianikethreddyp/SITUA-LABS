@@ -5,6 +5,12 @@ import Aperture from "./aperture";
 
 const whatsappNumber = "919398840252";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const fields = [
   { name: "name", label: "Name", type: "text", autoComplete: "name" },
   { name: "contact", label: "Email or phone", type: "text", autoComplete: "email" },
@@ -32,6 +38,12 @@ export default function Contact() {
       "",
       `What should work better: ${values.get("message")}`,
     ].join("\n");
+
+    // Track the completed handoff only; form contents must never be sent to analytics.
+    window.gtag?.("event", "whatsapp_open", {
+      event_category: "contact",
+      event_label: "contact_form",
+    });
 
     setIsOpeningWhatsApp(true);
     window.setTimeout(() => {
