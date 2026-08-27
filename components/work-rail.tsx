@@ -32,8 +32,8 @@ export default function WorkRail() {
                   width={1440}
                   height={900}
                   sizes="(max-width: 768px) 74vw, 460px"
-                  loading={i === 0 ? "eager" : "lazy"}
-                  quality={75}
+                  preload={i === 0}
+                  quality={70}
                   style={
                     p.imageZoom
                       ? { transform: `scale(${p.imageZoom})`, transformOrigin: "top left" }

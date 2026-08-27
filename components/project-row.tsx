@@ -53,7 +53,7 @@ export default function ProjectRow({
             width={1440}
             height={900}
             sizes="(max-width: 1024px) 100vw, 58vw"
-            quality={75}
+            quality={70}
             style={
               imageZoom
                 ? { transform: `scale(${imageZoom})`, transformOrigin: "top left" }
