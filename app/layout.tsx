@@ -93,16 +93,16 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-GTCCVFG9F8"
-          strategy="afterInteractive"
-        />
         <Script id="google-analytics" strategy="afterInteractive">
           {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-GTCCVFG9F8');`}
         </Script>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-GTCCVFG9F8"
+          strategy="lazyOnload"
+        />
         <Preloader />
         <a href="#main" className="skip-link">Skip to main content</a>
         <SiteHeader />
