@@ -6,6 +6,19 @@ import SiteFooter from "@/components/site-footer";
 import Preloader from "@/components/preloader";
 
 const siteUrl = new URL("https://situalabs.vercel.app");
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Situa",
+  url: siteUrl.origin,
+  logo: `${siteUrl.origin}/brand/situa-mark.svg`,
+  sameAs: ["https://www.instagram.com/situalabs/"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+919398840252",
+    contactType: "sales",
+  },
+};
 
 /* Display carries the attitude; body carries the reading. */
 const display = Bricolage_Grotesque({
@@ -70,6 +83,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${plexMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
+          }}
+        />
+      </head>
       <body>
         <Preloader />
         <a href="#main" className="skip-link">Skip to main content</a>

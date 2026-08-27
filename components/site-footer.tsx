@@ -17,7 +17,14 @@ export default function SiteFooter() {
         <nav aria-label="Footer" className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted">
           <a href="#work" className="hover:text-text transition-colors">Work</a>
           <a href="#contact" className="hover:text-text transition-colors">Contact</a>
-          {/* LinkedIn and email intentionally omitted until confirmed. */}
+          <a
+            href="https://www.instagram.com/situalabs/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-text transition-colors"
+          >
+            Instagram <span className="sr-only">(opens in a new tab)</span>
+          </a>
         </nav>
       </div>
     </footer>
