@@ -5,6 +5,8 @@ import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
 import Preloader from "@/components/preloader";
 
+const siteUrl = new URL("https://situa-web.vercel.app");
+
 /* Display carries the attitude; body carries the reading. */
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -26,9 +28,36 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Situa — We build how customers experience your business",
+  metadataBase: siteUrl,
+  title: "Situa | Customer experience design for growing businesses",
   description:
-    "Situa finds the point where a business loses customers — in discovery, in follow-up, or in delivery — and rebuilds it.",
+    "Situa designs and builds the websites, follow-up, and service systems that help businesses be understood, chosen, and easier to trust.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Situa",
+    title: "Situa | Customer experience design for growing businesses",
+    description:
+      "We build how customers experience your business — from first discovery to follow-through.",
+    images: [
+      {
+        url: "/social/situa-social-card.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Situa — We build how customers experience your business.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Situa | Customer experience design for growing businesses",
+    description:
+      "We build how customers experience your business — from first discovery to follow-through.",
+    images: ["/social/situa-social-card.jpg"],
+  },
   verification: {
     google: "HFNQxApqKap9mBydpQcdj59i7Q1NeqA37ZlTCURLtr8",
   },
